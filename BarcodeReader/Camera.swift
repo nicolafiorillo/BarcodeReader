@@ -385,6 +385,23 @@ class Camera : NSObject, AVCaptureMetadataOutputObjectsDelegate {
 		}
 	}
 	
+	func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+		
+		for metadataObject in metadataObjects as! [AVMetadataObject] {
+			if metadataObject.isKindOfClass(AVMetadataMachineReadableCodeObject) {
+				let barcode = metadataObject as! AVMetadataMachineReadableCodeObject
+				
+				if cameraDelegate != nil {
+					let shapeLayer = Camera.flashBarcode(videoPreview, barcode: barcode)
+					Camera.delay(0.1) {
+						shapeLayer.removeFromSuperlayer()
+						self.cameraDelegate!.barcodeDetected!(Barcode(type: barcode.type, content: barcode.stringValue))
+					}
+				}
+			}
+		}
+	}
+
 	private static func configureMetadata(metadataOutput: AVCaptureMetadataOutput) {
 
 		let availableTypes = metadataOutput.availableMetadataObjectTypes as! [String]
@@ -403,16 +420,49 @@ class Camera : NSObject, AVCaptureMetadataOutputObjectsDelegate {
 		metadataOutput.rectOfInterest = CGRect(x: 0, y: 0, width: 1, height: 1)
 	}
 	
-	func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+	private static let boxColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.25).CGColor
+	
+	private static func flashBarcode(videoPreview: VideoPreviewView?, barcode: AVMetadataMachineReadableCodeObject) -> CAShapeLayer {
 		
-		for metadataObject in metadataObjects as! [AVMetadataObject] {
-			if metadataObject.isKindOfClass(AVMetadataMachineReadableCodeObject) {
-				let barcode = metadataObject as! AVMetadataMachineReadableCodeObject
-				
-				if cameraDelegate != nil {
-					cameraDelegate!.barcodeDetected!(Barcode(type: barcode.type, content: barcode.stringValue))
-				}
-			}
-		}
+		let path = Camera.createBarcodeBox((videoPreview?.previewLayer)!, barcode: barcode)
+		
+		let shapeLayer = CAShapeLayer()
+		shapeLayer.strokeColor = boxColor
+		shapeLayer.fillColor = boxColor
+		shapeLayer.lineWidth = 1
+		
+		videoPreview?.layer.addSublayer(shapeLayer)
+		
+		shapeLayer.frame = (videoPreview?.bounds)!
+		shapeLayer.path = path
+		
+		return shapeLayer
+	}
+
+	private static func delay(delay:Double, closure:()->()) {
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), closure)
+	}
+	
+	private static func createBarcodeBox(videoPreviewLayer: AVCaptureVideoPreviewLayer, barcode: AVMetadataMachineReadableCodeObject) -> CGPath {
+		
+		let object = videoPreviewLayer.transformedMetadataObjectForMetadataObject(barcode) as! AVMetadataMachineReadableCodeObject
+		var path = CGPathCreateMutable()
+
+		var point = CGPointZero
+		CGPointMakeWithDictionaryRepresentation(object.corners[0] as! CFDictionary, &point)
+		CGPathMoveToPoint(path, nil, point.x, point.y)
+		
+		CGPointMakeWithDictionaryRepresentation(object.corners[1] as! CFDictionary, &point)
+		CGPathAddLineToPoint(path, nil, point.x, point.y)
+		
+		CGPointMakeWithDictionaryRepresentation(object.corners[2] as! CFDictionary, &point)
+		CGPathAddLineToPoint(path, nil, point.x, point.y)
+		
+		CGPointMakeWithDictionaryRepresentation(object.corners[3] as! CFDictionary, &point)
+		CGPathAddLineToPoint(path, nil, point.x, point.y)
+
+		CGPathCloseSubpath(path)
+		
+		return path
 	}
 }
