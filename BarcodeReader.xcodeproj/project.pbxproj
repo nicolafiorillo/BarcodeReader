@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		971E69CC1B4186EC0057162C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 971E69C91B4186EC0057162C /* LICENSE */; };
+		971E69CD1B4186EC0057162C /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 971E69CA1B4186EC0057162C /* README.md */; };
 		971E755F1B3EE11E00888BD6 /* CameraViewControllerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971E755E1B3EE11E00888BD6 /* CameraViewControllerEx.swift */; };
 		971E75611B40201000888BD6 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971E75601B40201000888BD6 /* Camera.swift */; };
 		971E75631B408CE400888BD6 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971E75621B408CE400888BD6 /* CameraViewController.swift */; };
@@ -33,6 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		971E69C91B4186EC0057162C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		971E69CA1B4186EC0057162C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		971E69CB1B4186EC0057162C /* Barcode.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Barcode.playground; sourceTree = "<group>"; };
 		971E755E1B3EE11E00888BD6 /* CameraViewControllerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewControllerEx.swift; sourceTree = "<group>"; };
 		971E75601B40201000888BD6 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		971E75621B408CE400888BD6 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +91,9 @@
 		9798C2C31B39F52200BD42CA = {
 			isa = PBXGroup;
 			children = (
+				971E69C91B4186EC0057162C /* LICENSE */,
+				971E69CA1B4186EC0057162C /* README.md */,
+				971E69CB1B4186EC0057162C /* Barcode.playground */,
 				9798C2F11B39F5EC00BD42CA /* AVFoundation.framework */,
 				9798C2CE1B39F52200BD42CA /* BarcodeReader */,
 				9798C2E41B39F52300BD42CA /* BarcodeReaderTests */,
@@ -224,6 +232,7 @@
 			files = (
 				9798C2D71B39F52200BD42CA /* Main.storyboard in Resources */,
 				9798C2DC1B39F52200BD42CA /* LaunchScreen.xib in Resources */,
+				971E69CC1B4186EC0057162C /* LICENSE in Resources */,
 				9798C2D91B39F52200BD42CA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,6 +257,7 @@
 				977C996A1B3AF3C000488137 /* VideoPreviewView.swift in Sources */,
 				9798C2D41B39F52200BD42CA /* CameraViewControllerOld.swift in Sources */,
 				9798C2D21B39F52200BD42CA /* AppDelegate.swift in Sources */,
+				971E69CD1B4186EC0057162C /* README.md in Sources */,
 				976B681B1B41465100B31C25 /* CameraDelegate.swift in Sources */,
 				971E75631B408CE400888BD6 /* CameraViewController.swift in Sources */,
 			);
